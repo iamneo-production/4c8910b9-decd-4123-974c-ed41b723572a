@@ -1,0 +1,28 @@
+server:
+  port: 8085
+  
+spring:
+  application:
+    name: API-GATEWAY
+    
+  cloud:
+    gateway:
+      routes:
+      - id: UserManagementApi
+        uri: lb://UserManagementApi
+        predicates:
+        - Path=/user/**
+      - id: STORY-MANAGEMENT-API
+        uri: lb://STORY-MANAGEMENT-API
+        predicates:
+        - Path=/story/**
+        
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true 
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+   

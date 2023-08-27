@@ -21,6 +21,8 @@ import com.isp.usermanagementapi.externals.StoryServiceIntf;
 import com.isp.usermanagementapi.repositories.UserRepository;
 import com.isp.usermanagementapi.repositories.UserStoryRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 
 @RestController
 @RequestMapping("/user")
@@ -48,6 +50,7 @@ public class UserController{
 	
 	
 	@PostMapping("{userId}/selectStory/{storyId}")
+	@CircuitBreaker(name="userStoryBreaker", fallbackMethod = "storyFallback")
 	public String selectStory(@PathVariable int storyId, @PathVariable int userId) {
 		ResponseEntity<Story> story1 = serviceIntf.getStory(storyId);
 		if(userStoryRepository.findByStory(story1.getBody())==null) {
@@ -64,6 +67,11 @@ public class UserController{
 		return "Story selected!";
 	}
 	
+	public String storyFallback(int storyId, int userId, Exception ex){
+		return "Story service is temporarily down!";
+	}
+
+
 	@PutMapping("{userStoryId}/selectCharacter/{charId}")
 	public String selectCharacter(@PathVariable int userStoryId, @PathVariable int charId) {
 		UserStory userStory = userStoryRepository.findById(userStoryId).get();
