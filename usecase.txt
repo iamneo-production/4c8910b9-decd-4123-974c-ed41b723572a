@@ -1,0 +1,202 @@
+ENT-01: Interactive Storytelling Platform
+
+Brief Description and Scope:
+The Interactive Storytelling Platform is an entertainment-focused digital platform that allows users 
+to engage with immersive and dynamic stories. Users can explore various storylines, 
+make decisions that influence the plot, and experience personalized narratives.
+The platform aims to captivate users' imagination,
+enabling them to become active participants in the storytelling process.
+
+1. Story Creation and Management: Enable content creators to develop and manage interactive stories by defining branching narratives, characters, settings, and decision points.
+2. User Interaction: Provide users with the ability to make choices at key moments in the story, affecting the progression and outcome of the narrative.
+3. Progress Tracking and Save Points: Implement a system for users to track their progress, allowing them to return to specific points in a story and continue from there.
+4. Multi-Platform Access: Ensure the platform is accessible across various devices, including desktops, tablets, and mobile phones, to facilitate seamless user engagement.
+5. Social Sharing and Community: Allow users to share their favorite story moments, choices, and achievements on social media platforms, and foster a sense of community through discussions and forums.
+
+Stakeholders:
+1. Users: The primary consumers of the interactive storytelling content.
+2. Content Creators: Authors, writers, and creators responsible for crafting engaging narratives.
+3. Platform Administrators: Oversee platform operations, content moderation, and user management.
+4. Marketing and Sales Teams: Promote the platform, attract users, and develop monetization strategies.
+5. Support and Customer Service: Address user inquiries, troubleshoot issues, and provide assistance.
+
+High-Level Business Requirements:
+1. Engaging User Interface: Create an intuitive and visually appealing user interface that facilitates easy navigation and interaction with the stories.
+2. Storyline Flexibility: Enable content creators to build complex branching narratives with multiple decision points and outcomes.
+3. Personalization and Replay Value: Provide users with meaningful choices that lead to diverse story paths, enhancing replayability and user engagement.
+4. Data Privacy and Security: Implement robust data protection measures to ensure user data and interactions are kept secure and private.
+5. Scalability and Performance: Design the platform to handle a growing user base and ensure smooth performance even during peak usage periods.
+
+Database Details
+MYSQL:
+To Access the MySQL database through the Terminal use the below mentioned Command:
+mysql -uroot --protocol=tcp -pexamly
+To login through the Utility use the below credentials:
+User name: root
+Password: examly
+host: 127.0.0.1
+port: 3306
+
+MONGODB:
+To Access the Mongo database through the Terminal use the below mentioned Command:
+mongo
+To login through the Utility use the below credentials:
+Click Connect to login. The username and Password can be empty.
+Note:
+For any further support please drop us a mail at elon@iamneo.ai
+
+COMMON Response model:
+{ status, data, errors:[{ errorcode, errorMessage }] }
+
+USER MANAGEMENT API:
+
+Endpoint: /create User
+Method: POST
+Request: {userId, Name}
+Response: success string
+
+Endpoint: /get progress
+Method: GET
+Request: {userId}
+Response: Get user 
+
+//store the flow id in the progess under UserStory
+Endpoint: /update flow
+Method: POST
+Request: {FlowId path variable}
+Response: success string
+
+//only do if time permits
+Endpoint: /login
+Method: POST
+Request: {userId, password}
+Response: success string
+
+//update UserStoryID and flowid initial will be 1  after decision in progress add the flow to progress
+Endpoint: /select story
+Method: POST
+Request: {StoryId}
+Response: success string "story selected"
+
+//
+Endpoint: /select character
+Method: POST
+Request: {CharacterId}
+Response: success string "Character selected"
+
+User:
+UserId - int
+Name - String
+userStories - List<UserStory>
+
+UserStory:
+Story - Story
+Character - Character
+Progress - List<Flow>
+
+STORY MANAGEMENT API:
+ 
+Endpoint: /getContent/{Id}
+Method: GET
+Request: contentId in pathvariable
+Response: {[ contentId, contentMessage]}
+ 
+Endpoint: /createContent
+Method: POST
+Request: {contentMessage}
+Response: success string
+ 
+Endpoint: /getFlow/{Id}
+Method: GET
+Request: flowId in pathvariable
+Response: {flowId [{ contentId, contentMessage}] }
+
+Endpoint: /createFlow
+Method: POST
+Request: {[contentId]}
+Response: success string
+
+Endpoint: /createChoice
+Method: POST
+Request: {choiceMessage}
+Response: success string
+
+Endpoint: /createQuestion
+Method: POST
+Request: {contentId, [choiceId]}
+Response: success string
+
+Endpoint: /{contentId}/choices
+Method: GET
+Request: contentId in path variable
+Response: { questionId, [{ choiceId, choiceName }] }
+
+Endpoint: /createCharacter
+Method: POST
+Request: {characterName}
+Response: success string
+
+Endpoint: /createStory
+Method: POST
+Request: {storyName, [characterId], [flowId]}
+Response: success string
+
+Endpoint: /getStory/{Id}
+Method: GET
+Request: storyId in path variable
+Response: {storyName, [{characterId, characterName}], [{flowId, [{contentId, contentMessage}] }] }
+
+Endpoint: /getCharacter/{Id}
+Method: GET
+Request: characterId in pathVariable
+Response: {characterId, characterName}
+
+Story:
+storyId - int
+storyName - String
+characters - List<Character>
+flow - List<Flow>
+ 
+Character:
+characterId - int
+name - String
+
+Content:
+contentId - int
+message - string
+
+Flow:
+flowId
+content List<Content> one to many
+
+Question
+qId
+contentId one to one
+choiceId List<Choice> one to many
+
+Choices
+choiceId
+choiceName
+ 
+ProgressManagement API
+
+Endpoint: /user/story
+Method: POST
+Request: {userId, storyId}
+Response: success string
+
+Endpoint: /user/story/{id}/start-reading
+Method: GET
+Request: storyId in pathVariable
+Response: { storyName [{ contentId, contentMessage }] }
+
+Endpoint: /user/story/{id}/decision/{contentId}
+Method: POST
+Request: storyId, contentId in pathVariable
+choiceId, choiceName in requestBody
+Response: { storyName [{ contentId, contentMessage }] }
+
+Endpoint: /user/story/{id}/continue-reading
+Method: GET
+Request: storyId in pathVariable
+Response: { storyName [{ contentId, contentMessage }] }

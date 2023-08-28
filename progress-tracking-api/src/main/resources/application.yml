@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8083
 
 spring:
   application:
-    name: USER-MANAGEMENT-API
+    name: PROGRESS-TRACKING-API
   datasource:
     url: jdbc:mysql://localhost:3306/isp
     username: root
@@ -23,3 +23,4 @@ eureka:
   instance:
     prefer-ip-address: true
 
+#/home/coder/project/workspace/progress-tracking-api/target/progress-tracking-api-0.0.1-SNAPSHOT.jar

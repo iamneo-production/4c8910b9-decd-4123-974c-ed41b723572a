@@ -30,9 +30,7 @@ public class Flows {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE) 
 	private int id;
-	
-	//private int flowId;
-	
+		
 	@ManyToMany(cascade = CascadeType.MERGE)
 	private List<Content> contentList;
 	
