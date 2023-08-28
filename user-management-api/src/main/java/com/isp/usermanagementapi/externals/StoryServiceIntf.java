@@ -9,7 +9,7 @@ import com.isp.usermanagementapi.entities.Characters;
 import com.isp.usermanagementapi.entities.Story;
 
 
-@FeignClient(name="Story-Service")
+@FeignClient(name="STORY-MANAGEMENT-API")
 public interface StoryServiceIntf {
 	
 	@GetMapping("/story/getStory/{storyId}")
