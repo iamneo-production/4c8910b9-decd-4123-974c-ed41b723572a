@@ -9,5 +9,7 @@ public interface StoryInf {
 
 	//@GetMapping("/r/insert")
     //public ResponseEntity<Patient> refmethod (Patient p) ;
+    @GetMapping("/getStory/{storyId}")
+	public ResponseEntity<Story> getStoryref(@PathVariable int storyId);
 
 }

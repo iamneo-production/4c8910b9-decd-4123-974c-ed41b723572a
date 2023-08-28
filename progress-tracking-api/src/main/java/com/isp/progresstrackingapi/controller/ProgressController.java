@@ -23,6 +23,10 @@ public class ProgressController {
 
     @GetMapping("/{id}/start-reading")
     public ResponseEntity<StoryResponse> startReadingStory(@PathVariable("id") int storyId) {
+        
+        {
+            return ResponseEntity.ok(storyRepository.findById(storyId).get());
+        }
         StoryResponse storyResponses=test;
         return ResponseEntity.ok(storyResponses);
     }

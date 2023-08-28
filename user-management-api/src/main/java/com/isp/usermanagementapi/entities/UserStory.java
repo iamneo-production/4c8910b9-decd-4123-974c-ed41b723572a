@@ -26,19 +26,14 @@ public class UserStory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	
+		
 	@OneToOne(cascade = CascadeType.MERGE)
     private Story story;
-    
-	
-	
+    	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	private List<Characters> character;
-    
-	
+    	
 	@OneToMany(cascade = CascadeType.MERGE ,orphanRemoval = true)
     private List<Flows> progressList;
     
-
 }

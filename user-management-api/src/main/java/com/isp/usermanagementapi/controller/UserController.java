@@ -67,7 +67,6 @@ public class UserController{
 	@PutMapping("{userStoryId}/selectCharacter/{charId}")
 	public String selectCharacter(@PathVariable int userStoryId, @PathVariable int charId) {
 		UserStory userStory = userStoryRepository.findById(userStoryId).get();
-		//List<Characters> chars = userStory.getStory().getCharacters();
 		List<Characters> char1 = userStory.getCharacter();
 		Characters character = serviceIntf.getChar(charId).getBody();
 		char1.add(character);
