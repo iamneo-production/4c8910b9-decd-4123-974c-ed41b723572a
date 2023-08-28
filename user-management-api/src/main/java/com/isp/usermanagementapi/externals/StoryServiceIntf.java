@@ -12,9 +12,9 @@ import com.isp.usermanagementapi.entities.Story;
 @FeignClient(name="Story-Service")
 public interface StoryServiceIntf {
 	
-	@GetMapping("/getStory/{storyId}")
+	@GetMapping("/story/getStory/{storyId}")
 	ResponseEntity<Story> getStory(@PathVariable int storyId);
 	
-	@GetMapping("/getCharacters/{charId}")
+	@GetMapping("/story/getCharacters/{charId}")
 	ResponseEntity<Characters> getChar(@PathVariable int charId);
 }
